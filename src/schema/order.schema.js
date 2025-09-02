@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ORDER_STATUSES } from '../idosellApiService.js';
+import { ORDER_STATUSES } from '../idosell/apiService.js';
 
 const orderProductSchema = new mongoose.Schema({
     product_id: String,

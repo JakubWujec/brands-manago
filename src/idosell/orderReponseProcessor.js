@@ -1,6 +1,6 @@
-import { connectToDatabase } from "./database.js";
+import { connectToDatabase } from "../database.js";
 import mongoose from 'mongoose';
-import OrderModel from "./schema/order.schema.js";
+import OrderModel from "../schema/order.schema.js";
 
 function processResponse(responseData) {
     let orders = []
