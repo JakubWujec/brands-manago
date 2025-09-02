@@ -5,7 +5,6 @@ import { SINGLE_ORDER_RESULT } from './data/idosell_order';
 describe('testprocessResult', () => {
     it('should have the correct NODE_ENV', () => {
         let value = processResult(SINGLE_ORDER_RESULT)
-        console.log(value.products)
         expect(value.orderId).toBe('admin-3'); 
         expect(value.currency).toBe('PLN'); 
         expect(value.totalPrice).toBe(20); 
