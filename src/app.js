@@ -18,6 +18,7 @@ const connectToDatabase = async () => {
     }
 };
 const app = express();
+console.log("ENV: ", process.env.NODE_ENV)
 connectToDatabase();
 
 app.use(morgan("dev"));
