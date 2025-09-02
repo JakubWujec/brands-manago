@@ -13,7 +13,7 @@ class InMemoryOrderService {
         return this.orders;
     }
 
-    byId(id){
+    byId(id) {
         return this.orders.find(order => order.order_id == id);
     }
 
@@ -21,7 +21,7 @@ class InMemoryOrderService {
 
 class MongoOrderService {
     constructor() {
-        
+
     }
 
     async all() {
@@ -30,6 +30,12 @@ class MongoOrderService {
 
     async byId(id) {
         return await OrderModel.findOne({ order_id: id });
+    }
+
+    async unfinishedIds(statuses) {
+        return await OrderModel.find({
+            status: { $in: statuses },
+        }).select('order_id')
     }
 }
 

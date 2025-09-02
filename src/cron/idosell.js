@@ -16,6 +16,13 @@ cron.schedule(TEN_SECONDS_INTERVAL, () => {
     console.log('Running cron job to insert data...');
     // pobierz wszystkie zamowienia ze sklepu
     // aktualizuj zamowienia ktore nie maja jakiegos tam statusu od jakiejs daty
-    // pobierz nowo dodane zamowienia
-    
+    // pobierz nowo dodane zamowienia 
 });
+
+function updateUnfinishedOrders() {
+    // pobierz id zamowien z db git statusami
+    // pobierz zamowienia z idosella
+    // przeprocesuj 
+    // update
+    
+}
