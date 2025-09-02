@@ -1,0 +1,18 @@
+import { describe, it, expect } from 'vitest';
+import { processResult } from '../src/idosell_order_processing';
+import { SINGLE_ORDER_RESULT } from './data/idosell_order';
+
+describe('testprocessResult', () => {
+    it('should have the correct NODE_ENV', () => {
+        let value = processResult(SINGLE_ORDER_RESULT)
+        console.log(value.products)
+        expect(value.orderId).toBe('admin-3'); 
+        expect(value.currency).toBe('PLN'); 
+        expect(value.totalPrice).toBe(20); 
+        expect(value.products).toHaveLength(1); 
+        expect(value.products[0].productId).toBe(85452); 
+        expect(value.products[0].productQuantity).toBe(1); 
+    });
+
+    
+});

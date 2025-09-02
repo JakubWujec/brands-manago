@@ -15,7 +15,7 @@ function processResult(resultData) {
     let productResults = resultData['orderDetails']['productsResults']
     let orderId = resultData['orderId']
     let products = []
-    for (let productResult in productResults) {
+    for (let productResult of productResults) {
         let productQuantity = productResult['productQuantity']
         let productId = productResult['productId']
         products.push({
@@ -91,4 +91,8 @@ async function main() {
     }
 }
 
-main();
+export {
+    processResult,
+    processResponse,
+    processOrderCurrencyData
+}
