@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { processResult } from '../src/idosell_order_processing';
+import { processResult } from '../src/idosell/orderReponseProcessor';
 import { SINGLE_ORDER_RESULT } from './data/idosell_order';
 
 describe('testprocessResult', () => {
