@@ -1,3 +1,5 @@
+import OrderModel from "../schema/order.schema.js";
+
 class InMemoryOrderService {
     constructor() {
         this.orders = [

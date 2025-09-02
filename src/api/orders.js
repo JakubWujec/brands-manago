@@ -5,14 +5,15 @@ import orderService from "../services/orderService.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    let orders = orderService.all();
+router.get("/", async (req, res) => {
+    let orders = await orderService.all();
+    
     res.json(orders);
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     let orderId = parseInt(req.params.id, 10);
-    let order = orderService.byId(orderId);
+    let order = await orderService.byId(orderId);
 
     if (!order){
         res.status(404).json({ message: 'Order not found' });
