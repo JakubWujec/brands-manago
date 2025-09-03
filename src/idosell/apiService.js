@@ -19,16 +19,13 @@ const ORDER_STATUSES = {
     false: "false",
     canceled: "Customer canceled"
 };
-const STATUSES_TO_EXCLUDE = [
-    "finished", "lost", "false"
-]
 
 class IdosellApiService {
     constructor() {
 
     }
 
-    async fetchAllIdosellOrdersSince(ordersDateBegin = '2025-01-09 00:00:00') {
+    async fetchAllIdosellOrdersSince(ordersDateBegin = '1901-01-01 00:00:00') {
         const URL = `https://${PANEL_LINK}/api/admin/v6/orders/orders/search`
         const options = {
             method: 'POST',
@@ -48,18 +45,36 @@ class IdosellApiService {
         };
 
         fetch(URL, options)
-            .then(res => {
-                data = res.json();
-            })
+            .then(res => res.json())
             .then(res => console.log(res))
             .catch(err => console.error(err));
     }
 
-    async fetchOrderByIds(ids){
-        
+    async fetchOrderByIds(ordersIds){
+        const options = {
+            method: 'GET',
+            headers: {
+                accept: 'application/json',
+                'X-API-KEY': IDOSELL_API_KEY
+            }
+        };
+
+        fetch('https://zooart6.yourtechnicaldomain.com/api/admin/v6/orders/orders?' + new URLSearchParams({
+            ordersIds: ordersIds
+        }), options)
+            .then(res => res.json())
+            .then(res => console.log(res))
+            .catch(err => console.error(err));
     }
 }
 
+function main() {
+    let service = new IdosellApiService();
+    // service.fetchAllIdosellOrdersSince();
+    service.fetchOrderByIds(['admin-3', 'admin-4'])
+}
+
+main()
 
 
 export {
