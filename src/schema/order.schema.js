@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 import { ORDER_STATUSES } from '../idosell/apiService.js';
 
 const orderProductSchema = new mongoose.Schema({
-    product_id: String,
-    quantity: Number,
+    productId: Number,
+    productQuantity: Number,
 });
 
 const orderSchema = new mongoose.Schema({
-    order_id: String,
+    orderId: String,
     products: [orderProductSchema],
-    total_price: Number,
-    status: {
+    totalPrice: Number,
+    orderStatus: {
         type: String,
         enum: Object.keys(ORDER_STATUSES), 
         default: 'new',
