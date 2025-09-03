@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-export const connectToDatabase = async () => {
+
+async function connectToDatabase(){
     try {
         await mongoose.connect('mongodb://localhost:27017/shop');
         console.log('MongoDB connected successfully');
@@ -8,3 +9,13 @@ export const connectToDatabase = async () => {
         process.exit(1); // Exit the process if the connection fails
     }
 };
+
+async function createConnection() {
+    return mongoose.createConnection('mongodb://localhost:27017/shop');
+}
+
+
+export {
+    createConnection,
+    connectToDatabase
+}

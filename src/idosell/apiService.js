@@ -44,9 +44,8 @@ class IdosellApiService {
             })
         };
 
-        fetch(URL, options)
+        return fetch(URL, options)
             .then(res => res.json())
-            .then(res => console.log(res))
             .catch(err => console.error(err));
     }
 
@@ -74,7 +73,7 @@ function main() {
     service.fetchOrderByIds(['admin-3', 'admin-4'])
 }
 
-main()
+// main()
 
 
 export {

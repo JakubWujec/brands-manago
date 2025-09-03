@@ -7,7 +7,7 @@ const orderProductSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
-    order_id: Number,
+    order_id: String,
     products: [orderProductSchema],
     total_price: Number,
     status: {
