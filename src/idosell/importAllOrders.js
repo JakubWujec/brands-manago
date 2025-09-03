@@ -3,7 +3,6 @@ import OrderModel from "../schema/order.schema.js";
 import { IdosellApiService } from "./apiService.js";
 import { processResponse } from "./orderReponseProcessor.js";
 
-
 async function importAllOrders() {
     let connection = null;
     try {
@@ -26,5 +25,3 @@ async function importAllOrders() {
     }
 }
 
-
-importAllOrders();

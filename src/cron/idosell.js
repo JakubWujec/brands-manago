@@ -19,10 +19,3 @@ cron.schedule(TEN_SECONDS_INTERVAL, () => {
     // pobierz nowo dodane zamowienia 
 });
 
-function updateUnfinishedOrders() {
-    // pobierz id zamowien z db git statusami
-    // pobierz zamowienia z idosella
-    // przeprocesuj 
-    // update
-    
-}
