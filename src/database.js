@@ -14,8 +14,25 @@ async function createConnection() {
     return mongoose.createConnection('mongodb://localhost:27017/shop');
 }
 
+async function withConnection(callback) {
+    let connection = null;
+    try {
+        connection = await createConnection(); // Open the connection
+        return await callback(connection); // Execute the callback with the connection
+    } catch (error) {
+        console.error('Error during connection:', error);
+        throw error; // Rethrow the error for handling outside
+    } finally {
+        if (connection) {
+            await connection.close(); // Close the connection
+            console.log('MongoDB connection closed.');
+        }
+    }
+}
+
 
 export {
     createConnection,
-    connectToDatabase
+    connectToDatabase,
+    withConnection
 }
