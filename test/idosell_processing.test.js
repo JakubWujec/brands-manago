@@ -11,6 +11,7 @@ describe('testprocessResult', () => {
         expect(value.products).toHaveLength(1); 
         expect(value.products[0].productId).toBe(85452); 
         expect(value.products[0].productQuantity).toBe(1); 
+        expect(value.orderStatus).toBe('finished')
     });
 
     

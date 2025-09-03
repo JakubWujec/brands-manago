@@ -14,6 +14,7 @@ function processResponse(responseData) {
 function processResult(resultData) {
     let productResults = resultData['orderDetails']['productsResults']
     let orderId = resultData['orderId']
+    let orderStatus = resultData['orderDetails']['orderStatus']
     let products = []
     for (let productResult of productResults) {
         let productQuantity = productResult['productQuantity']
@@ -29,6 +30,7 @@ function processResult(resultData) {
     return {
         orderId,
         products,
+        orderStatus,
         ...orderCost,
     }
 }
