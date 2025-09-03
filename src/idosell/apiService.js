@@ -58,11 +58,10 @@ class IdosellApiService {
             }
         };
 
-        fetch('https://zooart6.yourtechnicaldomain.com/api/admin/v6/orders/orders?' + new URLSearchParams({
+        return fetch('https://zooart6.yourtechnicaldomain.com/api/admin/v6/orders/orders?' + new URLSearchParams({
             ordersIds: ordersIds
         }), options)
             .then(res => res.json())
-            .then(res => console.log(res))
             .catch(err => console.error(err));
     }
 }

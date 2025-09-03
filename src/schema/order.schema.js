@@ -7,7 +7,11 @@ const orderProductSchema = new mongoose.Schema({
 });
 
 const orderSchema = new mongoose.Schema({
-    orderId: String,
+    orderId: {
+        type: String,
+        unique: true, // Ensures orderId is unique
+        required: true,
+    },
     products: [orderProductSchema],
     totalPrice: Number,
     orderStatus: {

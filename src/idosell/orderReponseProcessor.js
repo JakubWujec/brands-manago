@@ -1,8 +1,9 @@
-import mongoose from 'mongoose';
-import { connectToDatabase } from "../database.js";
 import OrderModel from "../schema/order.schema.js";
 
 function processResponse(responseData) {
+    if (!('Results' in responseData)){
+        return []
+    }
     return responseData['Results'].map(resultData => processResult(resultData));
 }
 
