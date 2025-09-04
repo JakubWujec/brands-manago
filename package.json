@@ -15,7 +15,9 @@
     "start": "node --env-file=.env src/index.js",
     "dev": "node --watch --env-file=.env src/index.js",
     "lint": "eslint --fix src",
-    "test": "vitest run"
+    "test": "vitest run",
+    "importAll": "node --env-file=.env src/jobs/importAllOrders.js",
+    "cron": "node --env-file=.env src/jobs/cronjob.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

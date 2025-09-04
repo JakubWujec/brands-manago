@@ -3,17 +3,15 @@ import OrderModel from "../schema/order.schema.js";
 import { fetchAllIdosellOrdersSince} from "./apiService.js";
 import { processResponse } from "./orderReponseProcessor.js";
 
-async function importAllOrders() {
+async function importAllOrdersSince(ordersDateBegin = "1901-01-01 00:00:00") {
   let connection = null;
   try {
     connection = await createConnection();
-
-
-    const response = await fetchAllIdosellOrdersSince();
+    const response = await fetchAllIdosellOrdersSince(ordersDateBegin);
     const orderModels = processResponse(response);
-
     const Order = connection.model("Order", OrderModel.schema);
-    await Order.insertMany(orderModels);
+    // skip duplicates
+    await Order.insertMany(orderModels, { ordered: false });
   }
   catch (error) {
     console.log(error);
@@ -26,3 +24,4 @@ async function importAllOrders() {
   }
 }
 
+export default importAllOrdersSince

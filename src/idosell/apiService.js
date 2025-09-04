@@ -1,4 +1,4 @@
-import { env } from "../env";
+import { env } from "../env.js";
 
 const PANEL_LINK = env.IDOSELL_PANEL_LINK;
 const IDOSELL_API_KEY = env.IDOSELL_API_KEY;
