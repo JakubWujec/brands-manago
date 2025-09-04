@@ -1,8 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose, { mongo } from 'mongoose';
+import { env } from "./env.js";
 
 async function connectToDatabase(){
     try {
-        await mongoose.connect('mongodb://localhost:27017/shop');
+        await mongoose.connect(env.DATABASE_URL);
         console.log('MongoDB connected successfully');
     } catch (error) {
         console.error('MongoDB connection error:', error);
@@ -10,8 +11,12 @@ async function connectToDatabase(){
     }
 };
 
+async function disconnectFromDatabase() {
+    await mongoose.disconnect();
+}
+
 async function createConnection() {
-    return mongoose.createConnection('mongodb://localhost:27017/shop');
+    return mongoose.createConnection(env.DATABASE_URL);
 }
 
 async function withConnection(callback) {
@@ -34,5 +39,6 @@ async function withConnection(callback) {
 export {
     createConnection,
     connectToDatabase,
-    withConnection
+    withConnection,
+    disconnectFromDatabase
 }

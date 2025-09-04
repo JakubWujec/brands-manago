@@ -1,19 +1,19 @@
 
 import express from "express";
-import orderService from "../services/orderService.js";
-
+import OrderModel from "../schema/order.schema.js";
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    let orders = await orderService.all();
+    let orders = await OrderModel.find();
     
     res.json(orders);
 });
 
 router.get('/:id', async (req, res) => {
-    let orderId = parseInt(req.params.id, 10);
-    let order = await orderService.byId(orderId);
+    let orderId = req.params.id
+    let order = await OrderModel.findOne({ orderId: orderId });
+    console.log("XXX", order, orderId)
 
     if (!order){
         res.status(404).json({ message: 'Order not found' });

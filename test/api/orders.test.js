@@ -1,24 +1,44 @@
 import request from 'supertest';
-import { describe, expect, it, vi } from "vitest";
+import { afterAll, beforeEach, beforeAll, describe, expect, it, vi } from "vitest";
 import orders from "../../src/api/orders.js"
 import express from "express";
+import OrderModel from '../../src/schema/order.schema.js';
+import { connectToDatabase, disconnectFromDatabase } from '../../src/database.js';
 
 const app = express();
 app.use(express.json());
 
-// Use the mock middleware for testing
 app.use("/api/v1/orders", orders);
 
+describe('Order API', async () => {
+    beforeAll(async () => {
+        try {
+            await connectToDatabase();
+            await OrderModel.deleteMany({});
+            await OrderModel.insertOne({
+                orderId: 1,
+                products: [],
+                totalPrice: 23,
+                orderStatus: 'new'
+            })
+        } catch (error) {
+            console.log(error)
+        }
 
-describe('Order API', () => {
+    });
+    afterAll(async () => {
+        await disconnectFromDatabase()
+    })
+
+
     it('should return all orders in JSON format', async () => {
         const response = await request(app).get('/api/v1/orders');
         expect(response.status).toBe(200);
         expect(response.body).toEqual(expect.arrayContaining([
             expect.objectContaining({
-                order_id: expect.any(Number),
-                product: expect.any(Object),
-                total_price: expect.any(Number),
+                orderId: expect.any(String),
+                products: expect.any(Array),
+                totalPrice: expect.any(Number),
             }),
         ]));
     });
@@ -27,9 +47,9 @@ describe('Order API', () => {
         const response = await request(app).get('/api/v1/orders/1');
         expect(response.status).toBe(200);
         expect(response.body).toEqual(expect.objectContaining({
-            order_id: 1,
-            product: expect.any(Object),
-            total_price: expect.any(Number),
+            orderId: "1",
+            products: expect.any(Object),
+            totalPrice: expect.any(Number),
         }));
     });
 

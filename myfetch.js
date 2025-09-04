@@ -47,9 +47,8 @@ const signInUser = async () => {
     }
 }
 
-const makeGetRequest = async () => {
+const makeGetRequest = async (token) => {
     try {
-       
         const response = await fetch('http://localhost:3000/api/v1/orders', {
             method: 'GET',
             headers: {
@@ -69,5 +68,6 @@ const makeGetRequest = async () => {
         console.error('Error:', error);
     }
 };
-
-// makeGetRequest();
+// signInUser();
+let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Yjk2MDZkYjUyODg4MThkMzEwZjI1NyIsImlhdCI6MTc1Njk4NzQyMSwiZXhwIjoxNzU3MDczODIxfQ.d5pAxlMeNm9CQtVD6nKp_n65rEz7XQVp1-6cUXCSorE'
+makeGetRequest(token);
