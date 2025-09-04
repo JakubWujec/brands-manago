@@ -49,12 +49,15 @@ const signInUser = async () => {
 
 const makeGetRequest = async (token) => {
     try {
-        const response = await fetch('http://localhost:3000/api/v1/orders', {
+        const searchParams = new URLSearchParams({
+            minWorth: 150,
+        })
+
+        const response = await fetch('http://localhost:3000/api/v1/orders?' + searchParams, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'authorization': token
-                // Add any other headers you need, like authorization
             },
         });
 

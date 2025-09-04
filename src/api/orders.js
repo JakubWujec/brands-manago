@@ -5,9 +5,28 @@ import OrderModel from "../schema/order.schema.js";
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    let orders = await OrderModel.find();
+    let { minWorth, maxWorth } = req.query;
+    let filter = {};
+
+    minWorth = Number(minWorth);
+    maxWorth = Number(maxWorth);
+
+    if (!isNaN(minWorth)) { 
+        filter.totalPrice = { ...filter.totalPrice, $gte: minWorth };
+    }
     
-    res.json(orders);
+    if (!isNaN(maxWorth)) { 
+        filter.totalPrice = { ...filter.totalPrice, $lte: maxWorth };
+    }
+
+    try {
+        const orders = await OrderModel.find(filter);
+        console.log(orders);
+        res.json(orders);
+    } catch (error) {
+        console.log("Error fetching orders:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get('/:id', async (req, res) => {
@@ -15,7 +34,7 @@ router.get('/:id', async (req, res) => {
     let order = await OrderModel.findOne({ orderId: orderId });
     console.log("XXX", order, orderId)
 
-    if (!order){
+    if (!order) {
         res.status(404).json({ message: 'Order not found' });
     }
 
