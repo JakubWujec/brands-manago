@@ -1,6 +1,14 @@
 import request from 'supertest';
-import { describe, it, expect } from "vitest";
-import app from "../../src/app.js";
+import { describe, expect, it, vi } from "vitest";
+import orders from "../../src/api/orders.js"
+import express from "express";
+
+const app = express();
+app.use(express.json());
+
+// Use the mock middleware for testing
+app.use("/api/v1/orders", orders);
+
 
 describe('Order API', () => {
     it('should return all orders in JSON format', async () => {
