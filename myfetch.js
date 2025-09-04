@@ -50,7 +50,7 @@ const signInUser = async () => {
 const makeGetRequest = async (token) => {
     try {
         const searchParams = new URLSearchParams({
-            minWorth: 150,
+            minWorth: 250,
         })
 
         const response = await fetch('http://localhost:3000/api/v1/orders?' + searchParams, {
@@ -65,7 +65,7 @@ const makeGetRequest = async (token) => {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json();
+        const data = await response.text();
         console.log('Response:', data);
     } catch (error) {
         console.error('Error:', error);
