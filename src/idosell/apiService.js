@@ -1,5 +1,7 @@
-const PANEL_LINK = "zooart6.yourtechnicaldomain.com";
-const IDOSELL_API_KEY = "YXBwbGljYXRpb24xNjpYeHI1K0MrNVRaOXBaY2lEcnpiQzBETUZROUxrRzFFYXZuMkx2L0RHRXZRdXNkcmF5R0Y3ZnhDMW1nejlmVmZP";
+import { env } from "../env";
+
+const PANEL_LINK = env.IDOSELL_PANEL_LINK;
+const IDOSELL_API_KEY = env.IDOSELL_API_KEY;
 const ORDER_STATUSES = {
   finished_ext: "completed in FA application",
   finished: "completed",
@@ -58,7 +60,7 @@ class IdosellApiService {
       },
     };
 
-    return fetch(`https://zooart6.yourtechnicaldomain.com/api/admin/v6/orders/orders?${new URLSearchParams({
+    return fetch(`https://${PANEL_LINK}/api/admin/v6/orders/orders?${new URLSearchParams({
       ordersIds,
     })}`, options)
       .then(res => res.json())

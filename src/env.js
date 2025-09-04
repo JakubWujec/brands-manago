@@ -5,6 +5,8 @@ const envSchema = z.object({
   SECRET_KEY: z.string(),
   PORT: z.coerce.number().default(3000),
   DATABASE_URL: z.string(),
+  IDOSELL_API_KEY: z.string().default("none"),
+  IDOSELL_PANEL_LINK: z.string().default("none")
 });
 
 try {
