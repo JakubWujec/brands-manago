@@ -22,8 +22,7 @@ const ORDER_STATUSES = {
   canceled: "Customer canceled",
 };
 
-
-async function fetchAllIdosellOrdersSince(ordersDateBegin = "1901-01-01 00:00:00") {
+async function fetchAllIdosellOrdersSince(ordersDateBegin = "1901-01-01 00:00:00", resultsPage = 0) {
   const URL = `https://${PANEL_LINK}/api/admin/v6/orders/orders/search`;
   const options = {
     method: "POST",
@@ -35,9 +34,9 @@ async function fetchAllIdosellOrdersSince(ordersDateBegin = "1901-01-01 00:00:00
     body: JSON.stringify({
       params: {
         ordersRange: {
-          resultsPage: 1,
           ordersDateRange: { ordersDateType: "add", ordersDateBegin },
         },
+        resultsPage,
       },
     }),
   };
