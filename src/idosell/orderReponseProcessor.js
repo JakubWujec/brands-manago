@@ -1,51 +1,52 @@
 import OrderModel from "../schema/order.schema.js";
 
 function processResponse(responseData) {
-    if (!('Results' in responseData)){
-        return []
-    }
-    return responseData['Results'].map(resultData => processResult(resultData));
+  if (!("Results" in responseData)) {
+    return [];
+  }
+  return responseData.Results.map(resultData => processResult(resultData));
 }
 
 function processResult(resultData) {
-    let productResults = resultData['orderDetails']['productsResults']
-    let orderId = resultData['orderId']
-    let orderStatus = resultData['orderDetails']['orderStatus']
-    let products = productResults.map(productResult => {
-        return {
-            productId: productResult['productId'],
-            productQuantity: productResult['productQuantity']
-        }        
-    })
+  const productResults = resultData.orderDetails.productsResults;
+  const orderId = resultData.orderId;
+  const orderStatus = resultData.orderDetails.orderStatus;
+  const products = productResults.map((productResult) => {
+    return {
+      productId: productResult.productId,
+      productQuantity: productResult.productQuantity,
+    };
+  });
 
-    let orderCost = processOrderCurrencyData(resultData['orderDetails']['payments']['orderBaseCurrency'])
+  const orderCost = processOrderCurrencyData(resultData.orderDetails.payments.orderBaseCurrency);
 
-    return new OrderModel({
-        orderId: orderId,
-        products: products.map(product => ({
-            productId: product.productId,
-            productQuantity: product.productQuantity,
-        })),
-        totalPrice: orderCost.totalPrice,
-        orderStatus: orderStatus
-    })
-
+  return new OrderModel({
+    orderId,
+    products: products.map(product => ({
+      productId: product.productId,
+      productQuantity: product.productQuantity,
+    })),
+    totalPrice: orderCost.totalPrice,
+    orderStatus,
+  });
 }
 
 function processOrderCurrencyData(orderCurrencyData) {
-    const fields = ['orderProductsCost', 'orderDeliveryCost', 'orderPayformCost', 'orderInsuranceCost']
-    const currency = orderCurrencyData['billingCurrency']
-    let totalPrice = 0
-    for (let field of fields) {
-        totalPrice += orderCurrencyData[field]
-    }
+  const fields = ["orderProductsCost", "orderDeliveryCost", "orderPayformCost", "orderInsuranceCost"];
+  const currency = orderCurrencyData.billingCurrency;
+  let totalPrice = 0;
+  for (const field of fields) {
+    totalPrice += orderCurrencyData[field];
+  }
 
-    return {
-        totalPrice,
-        currency
-    }
+  return {
+    totalPrice,
+    currency,
+  };
 }
 
 export {
-    processOrderCurrencyData, processResponse, processResult
+  processOrderCurrencyData,
+  processResponse,
+  processResult,
 };
