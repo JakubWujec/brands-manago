@@ -22,61 +22,49 @@ const ORDER_STATUSES = {
   canceled: "Customer canceled",
 };
 
-class IdosellApiService {
-  constructor() {
 
-  }
-
-  async fetchAllIdosellOrdersSince(ordersDateBegin = "1901-01-01 00:00:00") {
-    const URL = `https://${PANEL_LINK}/api/admin/v6/orders/orders/search`;
-    const options = {
-      method: "POST",
-      headers: {
-        "accept": "application/json",
-        "content-type": "application/json",
-        "X-API-KEY": IDOSELL_API_KEY,
-      },
-      body: JSON.stringify({
-        params: {
-          ordersRange: {
-            resultsPage: 1,
-            ordersDateRange: { ordersDateType: "add", ordersDateBegin },
-          },
+async function fetchAllIdosellOrdersSince(ordersDateBegin = "1901-01-01 00:00:00") {
+  const URL = `https://${PANEL_LINK}/api/admin/v6/orders/orders/search`;
+  const options = {
+    method: "POST",
+    headers: {
+      "accept": "application/json",
+      "content-type": "application/json",
+      "X-API-KEY": IDOSELL_API_KEY,
+    },
+    body: JSON.stringify({
+      params: {
+        ordersRange: {
+          resultsPage: 1,
+          ordersDateRange: { ordersDateType: "add", ordersDateBegin },
         },
-      }),
-    };
-
-    return fetch(URL, options)
-      .then(res => res.json())
-      .catch(err => console.error(err));
-  }
-
-  async fetchOrderByIds(ordersIds) {
-    const options = {
-      method: "GET",
-      headers: {
-        "accept": "application/json",
-        "X-API-KEY": IDOSELL_API_KEY,
       },
-    };
+    }),
+  };
 
-    return fetch(`https://${PANEL_LINK}/api/admin/v6/orders/orders?${new URLSearchParams({
-      ordersIds,
-    })}`, options)
-      .then(res => res.json())
-      .catch(err => console.error(err));
-  }
+  return fetch(URL, options)
+    .then(res => res.json())
+    .catch(err => console.error(err));
 }
 
-function main() {
-  const service = new IdosellApiService();
-  // service.fetchAllIdosellOrdersSince();
-  service.fetchOrderByIds(["admin-3", "admin-4"]);
-}
+async function fetchOrderByIds(ordersIds) {
+  const options = {
+    method: "GET",
+    headers: {
+      "accept": "application/json",
+      "X-API-KEY": IDOSELL_API_KEY,
+    },
+  };
 
-// main()
+  return fetch(`https://${PANEL_LINK}/api/admin/v6/orders/orders?${new URLSearchParams({
+    ordersIds,
+  })}`, options)
+    .then(res => res.json())
+    .catch(err => console.error(err));
+}
 
 export {
-  IdosellApiService,
+  fetchAllIdosellOrdersSince,
+  fetchOrderByIds,
   ORDER_STATUSES,
 };

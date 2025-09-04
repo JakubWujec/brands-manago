@@ -1,6 +1,6 @@
 import { createConnection } from "../database.js";
 import OrderModel from "../schema/order.schema.js";
-import { IdosellApiService } from "./apiService.js";
+import { fetchAllIdosellOrdersSince} from "./apiService.js";
 import { processResponse } from "./orderReponseProcessor.js";
 
 async function importAllOrders() {
@@ -8,8 +8,8 @@ async function importAllOrders() {
   try {
     connection = await createConnection();
 
-    const service = new IdosellApiService();
-    const response = await service.fetchAllIdosellOrdersSince();
+
+    const response = await fetchAllIdosellOrdersSince();
     const orderModels = processResponse(response);
 
     const Order = connection.model("Order", OrderModel.schema);
@@ -25,3 +25,4 @@ async function importAllOrders() {
     }
   }
 }
+

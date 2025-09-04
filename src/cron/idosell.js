@@ -1,4 +1,5 @@
 import cron from "node-cron";
+import updateUnfinishedOrders from "../idosell/updateUnfinishedOrders";
 
 // Pobierz wszystkie zamówienia z podanego sklepu. Następnie pobieraj
 // nowo dodane zamówienia co X minut (np. parametr
@@ -13,7 +14,8 @@ const HOUR_INTERVAL = "0 * * * *";
 
 cron.schedule(TEN_SECONDS_INTERVAL, () => {
   console.log("Running cron job to insert data...");
-  // pobierz wszystkie zamowienia ze sklepu
-  // aktualizuj zamowienia ktore nie maja jakiegos tam statusu od jakiejs daty
-  // pobierz nowo dodane zamowienia
+  // aktualizuj
+  updateUnfinishedOrders();
+  // pobierz nowe
+  
 });

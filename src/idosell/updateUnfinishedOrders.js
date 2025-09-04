@@ -1,14 +1,14 @@
 import { withConnection } from "../database.js";
 import OrderModel from "../schema/order.schema.js";
-import { IdosellApiService } from "./apiService.js";
+import { fetchOrderByIds } from "./apiService.js";
 import { processResponse } from "./orderReponseProcessor.js";
 
 async function updateUnfinishedOrders() {
   // pobierz id zamowien z db git statusami
   const ordersIds = await getOrderModelsIds();
   // pobierz zamowienia z idosella
-  const service = new IdosellApiService();
-  const idosellResponse = await service.fetchOrderByIds(ordersIds);
+
+  const idosellResponse = await fetchOrderByIds(ordersIds);
 
   // przeprocesuj
   console.log(idosellResponse);
@@ -52,4 +52,4 @@ async function updateOrders(orderModelsToUpdate) {
   });
 }
 
-updateUnfinishedOrders();
+export default updateUnfinishedOrders;
