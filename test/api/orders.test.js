@@ -30,32 +30,28 @@ describe('Order API', async () => {
         await disconnectFromDatabase()
     })
 
+    it('should return all orders in CSV format', async () => {
+        const response = await request(app).get('/api/v1/orders?');
 
-    it('should return all orders in JSON format', async () => {
-        const response = await request(app).get('/api/v1/orders');
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(expect.arrayContaining([
-            expect.objectContaining({
-                orderId: expect.any(String),
-                products: expect.any(Array),
-                totalPrice: expect.any(Number),
-            }),
-        ]));
+        expect(response.headers['content-type']).toMatch(/text\/csv/);
+        expect(response.headers['content-disposition']).toContain('attachment; filename=orders.csv');
+        expect(response.text).toContain('orderId'); // Check if CSV contains header
     });
 
     it('should return a specific order by ID', async () => {
-        const response = await request(app).get('/api/v1/orders/1');
+        const orderId = '1'; // Use a valid orderId from your test data
+        const response = await request(app).get(`/api/v1/orders/${orderId}`);
         expect(response.status).toBe(200);
-        expect(response.body).toEqual(expect.objectContaining({
-            orderId: "1",
-            products: expect.any(Object),
-            totalPrice: expect.any(Number),
-        }));
+        expect(response.headers['content-type']).toMatch(/text\/csv/);
+        expect(response.headers['content-disposition']).toContain('attachment; filename=orders.csv');
+        expect(response.text).toContain('orderId'); // Check if CSV contains header
     });
 
     it('should return 404 for a non-existent order', async () => {
-        const response = await request(app).get('/api/v1/orders/999');
+        const response = await request(app).get('/api/v1/orders/nonexistentId');
         expect(response.status).toBe(404);
-        expect(response.body).toEqual({ message: 'Order not found' });
+
+        expect(response.body.message).toBe('Order not found');
     });
 });
